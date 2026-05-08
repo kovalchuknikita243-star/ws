@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Обчислення оцінки</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background: linear-gradient(135deg,#1e3c72,#2a5298);
+      padding:20px;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    .container{
+      width:100%;
+      max-width:700px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border-radius:20px;
+      padding:30px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+      animation: fadeIn 1s ease;
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:25px;
+      font-size:34px;
+      animation: slideDown 0.8s ease;
+    }
+
+    fieldset{
+      border:none;
+      margin-bottom:20px;
+      padding:20px;
+      border-radius:15px;
+      background: rgba(255,255,255,0.08);
+      transition:0.3s;
+    }
+
+    fieldset:hover{
+      transform:translateY(-3px);
+      background: rgba(255,255,255,0.12);
+    }
+
+    legend{
+      padding:0 10px;
+      font-weight:bold;
+      font-size:18px;
+      color:#ffd369;
+    }
+
+    .input-group{
+      display:flex;
+      flex-direction:column;
+      margin:12px 0;
+    }
+
+    label{
+      margin-bottom:6px;
+      font-size:15px;
+    }
+
+    input[type="number"],
+    input[readonly]{
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      outline:none;
+      font-size:16px;
+      transition:0.3s;
+    }
+
+    input[type="number"]:focus{
+      transform:scale(1.02);
+      box-shadow:0 0 10px #ffd369;
+    }
+
+    .buttons{
+      display:flex;
+      gap:15px;
+      flex-wrap:wrap;
+      margin-top:15px;
+    }
+
+    button{
+      flex:1;
+      min-width:140px;
+      padding:12px;
+      border:none;
+      border-radius:12px;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.3s;
+      font-weight:bold;
+    }
+
+    .calc-btn{
+      background:#ffd369;
+      color:#222;
+    }
+
+    .calc-btn:hover{
+      background:#ffbf00;
+      transform:scale(1.05);
+    }
+
+    .clear-btn{
+      background:#ff5c5c;
+      color:white;
+    }
+
+    .clear-btn:hover{
+      background:#ff2d2d;
+      transform:scale(1.05);
+    }
+
+    .result-box{
+      text-align:center;
+      margin-top:15px;
+    }
+
+    #output1{
+      text-align:center;
+      font-size:28px;
+      font-weight:bold;
+      color:#222;
+      background:#fff;
+    }
+
+    .progress-container{
+      width:100%;
+      height:22px;
+      background:rgba(255,255,255,0.2);
+      border-radius:20px;
+      overflow:hidden;
+      margin-top:15px;
+    }
+
+    .progress-bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#00ff95,#00c3ff);
+      transition:width 1s ease;
+    }
+
+    .criteria p{
+      margin:7px 0;
+      opacity:0.9;
+      transition:0.3s;
+    }
+
+    .criteria p:hover{
+      transform:translateX(5px);
+      color:#ffd369;
+    }
+
+    .message{
+      text-align:center;
+      margin-top:15px;
+      font-size:18px;
+      font-weight:bold;
+      animation:pulse 1.5s infinite;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes slideDown{
+      from{
+        opacity:0;
+        transform:translateY(-30px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes pulse{
+      0%{
+        opacity:1;
+      }
+      50%{
+        opacity:0.6;
+      }
+      100%{
+        opacity:1;
+      }
+    }
+
+    @media(max-width:600px){
+      h1{
+        font-size:26px;
+      }
+
+      .container{
+        padding:20px;
+      }
+    }
+  </style>
+
+  <script>
+    function area1() {
+
+      let b = parseFloat(document.form1.st1.value);
+      let m = parseFloat(document.form1.st2.value);
+
+      if (isNaN(b) || isNaN(m) || m <= 0) {
+        alert("Введіть коректні дані!");
+        return;
+      }
+
+      const p = (b / m) * 100;
+
+      let grade = 1;
+      let message = "";
+
+      if (p >= 100) {
+        grade = 12;
+        message = "Відмінний результат!";
+      } else if (p >= 92) {
+        grade = 11;
+        message = "Дуже добре!";
+      } else if (p >= 83) {
+        grade = 10;
+        message = "Чудова оцінка!";
+      } else if (p >= 75) {
+        grade = 9;
+        message = "Добрий результат!";
+      } else if (p >= 67) {
+        grade = 8;
+        message = "Непогано!";
+      } else if (p >= 58) {
+        grade = 7;
+        message = "Нормально!";
+      } else if (p >= 50) {
+        grade = 6;
+        message = "Задовільно";
+      } else if (p >= 42) {
+        grade = 5;
+        message = "Можна краще";
+      } else if (p >= 33) {
+        grade = 4;
+        message = "Потрібно підтягнути знання";
+      } else if (p >= 25) {
+        grade = 3;
+        message = "Слабкий результат";
+      } else if (p >= 17) {
+        grade = 2;
+        message = "Дуже низький результат";
+      } else {
+        grade = 1;
+        message = "Спробуй ще раз!";
+      }
+
+      document.form1.output1.value = grade;
+
+      document.getElementById("progress").style.width = p + "%";
+
+      document.getElementById("percent").innerHTML =
+        "Відсоток: " + p.toFixed(1) + "%";
+
+      document.getElementById("message").innerHTML = message;
+    }
+
+    function clearForm(){
+      document.form1.reset();
+      document.getElementById("progress").style.width = "0%";
+      document.getElementById("percent").innerHTML = "";
+      document.getElementById("message").innerHTML = "";
+    }
+  </script>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>📘 Обчислення оцінки</h1>
+
+    <form name="form1">
+
+      <fieldset>
+        <legend>Введення балів</legend>
+
+        <div class="input-group">
+          <label>Набраний бал:</label>
+          <input type="number" name="st1" placeholder="Наприклад: 78">
+        </div>
+
+        <div class="input-group">
+          <label>Максимальний бал:</label>
+          <input type="number" name="st2" placeholder="Наприклад: 100">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Результат</legend>
+
+        <div class="result-box">
+          <input type="text" name="output1" id="output1" readonly placeholder="Оцінка">
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="calc-btn" onclick="area1()">
+            Обчислити
+          </button>
+
+          <button type="button" class="clear-btn" onclick="clearForm()">
+            Очистити
+          </button>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar" id="progress"></div>
+        </div>
+
+        <div class="message" id="percent"></div>
+        <div class="message" id="message"></div>
+
+      </fieldset>
+
+      <fieldset class="criteria">
+        <legend>Критерії оцінювання</legend>
+
+        <p>12 — не менше 100%</p>
+        <p>11 — не менше 92%</p>
+        <p>10 — не менше 83%</p>
+        <p>9 — не менше 75%</p>
+        <p>8 — не менше 67%</p>
+        <p>7 — не менше 58%</p>
+        <p>6 — не менше 50%</p>
+        <p>5 — не менше 42%</p>
+        <p>4 — не менше 33%</p>
+        <p>3 — не менше 25%</p>
+        <p>2 — не менше 17%</p>
+
+      </fieldset>
+
+    </form>
+
+  </div>
+
+</body>
+</html>
