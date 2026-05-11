@@ -6,6 +6,7 @@
 <title>Обчислення оцінки</title>
 
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -37,13 +38,13 @@ body{
 h1{
   text-align:center;
   margin-bottom:10px;
-  font-size:36px;
+  font-size:38px;
 }
 
 .author{
   text-align:center;
-  margin-bottom:20px;
-  font-size:18px;
+  margin-bottom:25px;
+  font-size:20px;
   color:#ffd369;
   font-weight:bold;
 }
@@ -54,37 +55,49 @@ fieldset{
   padding:20px;
   border-radius:15px;
   background:rgba(255,255,255,0.08);
+  transition:0.3s;
+}
+
+fieldset:hover{
+  transform:translateY(-3px);
 }
 
 legend{
   padding:0 10px;
   font-weight:bold;
-  font-size:18px;
+  font-size:20px;
   color:#ffd369;
 }
 
 .input-group{
   display:flex;
   flex-direction:column;
-  margin:12px 0;
+  margin:15px 0;
 }
 
 label{
-  margin-bottom:6px;
+  margin-bottom:8px;
+  font-size:16px;
 }
 
 input[type="number"],
 input[readonly]{
   padding:14px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
+  outline:none;
   font-size:18px;
+}
+
+input[type="number"]:focus{
+  transform:scale(1.02);
+  box-shadow:0 0 15px #ffd369;
 }
 
 #output1{
   width:100%;
-  height:120px;
-  font-size:60px;
+  height:130px;
+  font-size:70px;
   font-weight:bold;
   text-align:center;
   background:white;
@@ -96,14 +109,15 @@ input[readonly]{
   display:flex;
   gap:15px;
   flex-wrap:wrap;
-  margin-top:15px;
+  margin-top:20px;
 }
 
 button{
   flex:1;
+  min-width:150px;
   padding:14px;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
   font-size:18px;
   cursor:pointer;
   font-weight:bold;
@@ -136,7 +150,7 @@ button{
   background:rgba(255,255,255,0.2);
   border-radius:20px;
   overflow:hidden;
-  margin-top:15px;
+  margin-top:20px;
 }
 
 .progress-bar{
@@ -149,15 +163,56 @@ button{
 .message{
   text-align:center;
   margin-top:15px;
-  font-size:22px;
+  font-size:24px;
   font-weight:bold;
 }
 
 #emoji{
   text-align:center;
-  font-size:90px;
+  font-size:100px;
   margin-top:15px;
 }
+
+.criteria p{
+  margin:7px 0;
+  font-size:17px;
+}
+
+/* Слайдер */
+
+.slider-container{
+  margin-top:25px;
+  text-align:center;
+}
+
+.slider-container label{
+  display:block;
+  margin-bottom:12px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+input[type="range"]{
+  width:100%;
+  height:14px;
+  border-radius:10px;
+  appearance:none;
+  background:linear-gradient(90deg,#00ff95,#00c3ff);
+  outline:none;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  appearance:none;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:#ffd369;
+  border:3px solid white;
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+
+/* Салют */
 
 .fireworks{
   position:fixed;
@@ -168,25 +223,46 @@ button{
 
 .firework{
   position:absolute;
-  width:10px;
-  height:10px;
+  width:12px;
+  height:12px;
   border-radius:50%;
-  animation:explode 1s ease-out forwards;
+  animation:explode 3s ease-out forwards;
 }
 
 @keyframes explode{
-  from{
+
+  0%{
     transform:scale(1);
     opacity:1;
   }
-  to{
-    transform:translate(var(--x),var(--y)) scale(0);
+
+  70%{
+    opacity:1;
+  }
+
+  100%{
+    transform:
+      translate(var(--x),var(--y))
+      scale(0);
+
     opacity:0;
   }
 }
 
-.criteria p{
-  margin:6px 0;
+@media(max-width:600px){
+
+  h1{
+    font-size:28px;
+  }
+
+  #output1{
+    font-size:50px;
+    height:100px;
+  }
+
+  .container{
+    padding:20px;
+  }
 }
 
 </style>
@@ -195,28 +271,51 @@ button{
 
 function createFireworks(){
 
-  const container=document.getElementById("fireworks");
-  container.innerHTML="";
+  const container =
+    document.getElementById("fireworks");
 
-  for(let i=0;i<80;i++){
+  container.innerHTML = "";
 
-    let div=document.createElement("div");
-    div.classList.add("firework");
+  let interval = setInterval(()=>{
 
-    div.style.left=Math.random()*100+"vw";
-    div.style.top=Math.random()*100+"vh";
+    for(let i=0;i<25;i++){
 
-    div.style.background=
-      `hsl(${Math.random()*360},100%,50%)`;
+      let div=document.createElement("div");
 
-    div.style.setProperty("--x",
-      (Math.random()*400-200)+"px");
+      div.classList.add("firework");
 
-    div.style.setProperty("--y",
-      (Math.random()*400-200)+"px");
+      div.style.left =
+        Math.random()*100+"vw";
 
-    container.appendChild(div);
-  }
+      div.style.top =
+        Math.random()*100+"vh";
+
+      div.style.background =
+        `hsl(${Math.random()*360},
+        100%,50%)`;
+
+      div.style.setProperty(
+        "--x",
+        (Math.random()*700-350)+"px"
+      );
+
+      div.style.setProperty(
+        "--y",
+        (Math.random()*700-350)+"px"
+      );
+
+      container.appendChild(div);
+
+      setTimeout(()=>{
+        div.remove();
+      },3000);
+    }
+
+  },400);
+
+  setTimeout(()=>{
+    clearInterval(interval);
+  },6000);
 }
 
 function area1(){
@@ -226,8 +325,11 @@ function area1(){
 
   if(b<0 || m<0){
 
-    document.getElementById("message").innerHTML=
+    document.getElementById("message").innerHTML =
       "😎 Не дури систему";
+
+    document.getElementById("emoji").innerHTML =
+      "🚫";
 
     return;
   }
@@ -235,6 +337,7 @@ function area1(){
   if(isNaN(b)||isNaN(m)||m<=0){
 
     alert("Введіть коректні дані!");
+
     return;
   }
 
@@ -305,23 +408,32 @@ function area1(){
     emoji="🐵";
   }
 
-  document.form1.output1.value=grade;
+  document.form1.output1.value = grade;
 
-  document.getElementById("progress").style.width=
+  document.getElementById("progress").style.width =
     Math.min(p,100)+"%";
 
-  document.getElementById("percent").innerHTML=
+  document.getElementById("percent").innerHTML =
     "Відсоток: "+p.toFixed(1)+"%";
 
-  document.getElementById("message").innerHTML=
+  document.getElementById("message").innerHTML =
     message;
 
-  document.getElementById("emoji").innerHTML=
+  document.getElementById("emoji").innerHTML =
     emoji;
 
+  document.getElementById("scoreSlider").value =
+    Math.min(p,100);
+
+  document.getElementById("sliderValue").innerHTML =
+    Math.min(p,100).toFixed(1);
+
   if(grade>=10){
+
     createFireworks();
+
   }else{
+
     document.getElementById("fireworks").innerHTML="";
   }
 }
@@ -330,20 +442,32 @@ function clearForm(){
 
   document.form1.reset();
 
-  document.getElementById("progress").style.width="0%";
+  document.form1.output1.value = "";
 
-  document.getElementById("percent").innerHTML="";
+  document.getElementById("progress").style.width =
+    "0%";
 
-  document.getElementById("message").innerHTML="";
+  document.getElementById("percent").innerHTML =
+    "";
 
-  document.getElementById("emoji").innerHTML="";
+  document.getElementById("message").innerHTML =
+    "";
 
-  document.getElementById("fireworks").innerHTML="";
+  document.getElementById("emoji").innerHTML =
+    "";
 
-  document.form1.output1.value="";
+  document.getElementById("fireworks").innerHTML =
+    "";
+
+  document.getElementById("scoreSlider").value =
+    0;
+
+  document.getElementById("sliderValue").innerHTML =
+    0;
 }
 
 </script>
+
 </head>
 
 <body>
@@ -361,16 +485,29 @@ function clearForm(){
 <form name="form1">
 
 <fieldset>
+
 <legend>Введення балів</legend>
 
 <div class="input-group">
+
 <label>Набраний бал:</label>
-<input type="number" name="st1" placeholder="Наприклад: 78">
+
+<input
+type="number"
+name="st1"
+placeholder="Наприклад: 78">
+
 </div>
 
 <div class="input-group">
+
 <label>Максимальний бал:</label>
-<input type="number" name="st2" placeholder="Наприклад: 100">
+
+<input
+type="number"
+name="st2"
+placeholder="Наприклад: 100">
+
 </div>
 
 </fieldset>
@@ -379,27 +516,43 @@ function clearForm(){
 
 <legend>Результат</legend>
 
-<input type="text" name="output1" id="output1"
-readonly placeholder="Оцінка">
+<input
+type="text"
+name="output1"
+id="output1"
+readonly
+placeholder="Оцінка">
 
 <div class="buttons">
 
-<button type="button"
+<button
+type="button"
 class="calc-btn"
 onclick="area1()">
+
 Обчислити
+
 </button>
 
-<button type="button"
+<button
+type="button"
 class="clear-btn"
 onclick="clearForm()">
+
 Очистити
+
 </button>
 
 </div>
 
 <div class="progress-container">
-<div class="progress-bar" id="progress"></div>
+
+<div
+class="progress-bar"
+id="progress">
+
+</div>
+
 </div>
 
 <div class="message" id="percent"></div>
@@ -407,6 +560,23 @@ onclick="clearForm()">
 <div class="message" id="message"></div>
 
 <div id="emoji"></div>
+
+<div class="slider-container">
+
+<label>
+Рівень успіху:
+<span id="sliderValue">0</span>%
+</label>
+
+<input
+type="range"
+min="0"
+max="100"
+value="0"
+id="scoreSlider"
+disabled>
+
+</div>
 
 </fieldset>
 
