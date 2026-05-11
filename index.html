@@ -33,6 +33,7 @@ body{
   border-radius:20px;
   padding:30px;
   box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  margin-bottom:40px;
 }
 
 h1{
@@ -163,8 +164,10 @@ button{
 .message{
   text-align:center;
   margin-top:15px;
-  font-size:24px;
+  font-size:22px;
   font-weight:bold;
+  word-wrap:break-word;
+  line-height:1.4;
 }
 
 #emoji{
@@ -348,64 +351,111 @@ function area1(){
   let emoji="";
 
   if(p>=100){
+
     grade=12;
-    message="message=
-"🏆 Ідеальна робота! Згідно критеріїв МОН України, 12 балів ставиться лише за бездоганне виконання завдань не пов'язаних з тестовими!";!";
+
+    message=
+    "🏆 Ідеальна робота! 12 балів ставиться лише за бездоганне виконання завдань.";
+
     emoji="🎆";
   }
+
   else if(p>=92){
+
     grade=11;
+
     message="Дуже добре!";
+
     emoji="🎇";
   }
+
   else if(p>=83){
+
     grade=10;
+
     message="Чудова оцінка!";
+
     emoji="✨";
   }
+
   else if(p>=75){
+
     grade=9;
+
     message="Добрий результат!";
+
     emoji="😎";
   }
+
   else if(p>=67){
+
     grade=8;
+
     message="Непогано!";
+
     emoji="🙂";
   }
+
   else if(p>=58){
+
     grade=7;
+
     message="Нормально!";
+
     emoji="👌";
   }
+
   else if(p>=50){
+
     grade=6;
+
     message="Задовільно";
+
     emoji="👍";
   }
+
   else if(p>=42){
+
     grade=5;
+
     message="Можна краще";
+
     emoji="😐";
   }
+
   else if(p>=33){
+
     grade=4;
+
     message="Потрібно підтягнути знання";
+
     emoji="😕";
   }
+
   else if(p>=25){
+
     grade=3;
+
     message="Слабкий результат";
+
     emoji="🐵";
   }
+
   else if(p>=17){
+
     grade=2;
+
     message="Дуже низький результат";
+
     emoji="🐵";
   }
+
   else{
+
     grade=1;
+
     message="Спробуй ще раз!";
+
     emoji="🐵";
   }
 
